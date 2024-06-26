@@ -3,6 +3,7 @@ import { useMovieData } from "../hooks/useMovieData";
 import { Star } from "react-bootstrap-icons";
 import { useDispatch } from "react-redux";
 import { addItem } from "../features/wishListSlice";
+import { postToWatchList } from "../features/watchListSlice";
 
 
 
@@ -28,9 +29,25 @@ const MovieData = () => {
             popularity: movieData.popularity,
 
         }
-        // dispatch the wishList action
-        dispatch(addItem())
+        // dispatch the addItem action
+        dispatch(addItem(movie))
     }
+
+    const handleAddWatchList = (movieData) => {
+        const movie = {
+            id: movieData.id,
+            original_title: movieData.original_title,
+            poster_path: `https://image.tmdb.org/t/p/w185/${movieData.poster_path}`,
+            genres: movieData.genres &&
+            movieData.genres
+                .map((genre) => genre.name)
+                .join(", "),
+            overview: movieData.overview,
+            release_date: movieData.release_date,
+            popularity: movieData.popularity,
+    }
+    dispatch(postToWatchList(movie));
+}
 
 
     return (
@@ -67,7 +84,8 @@ const MovieData = () => {
                         </ListGroup.Item>
                     </ListGroup>
 
-                    <Card.Link className="btn btn-danger mt-3">
+                    <Card.Link className="btn btn-danger mt-3"
+                    onClick={() => handleAddWatchList()}>
                         Add to Watchlist
                     </Card.Link>
                 </Card.Body>

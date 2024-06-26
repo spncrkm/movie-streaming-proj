@@ -7,6 +7,7 @@ import './App.css'
 import UserContext from './context/UserContext'
 import Home from './components/Home';
 import Login from './components/Login';
+import MovieList from './components/MovieList';
 import { store } from './store';
 
 
@@ -23,6 +24,7 @@ function App() {
             <Routes>
               <Route path='/' element={<Home />} />
               <Route path='/login' element={<Login />} />
+              <Route path='wish-list' element={<MovieList />} />
             </Routes>
           </BrowserRouter>
         </UserContext.Provider>
