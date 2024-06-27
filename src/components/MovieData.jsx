@@ -4,13 +4,21 @@ import { Star } from "react-bootstrap-icons";
 import { useDispatch } from "react-redux";
 import { addItem } from "../features/wishListSlice";
 import { postToWatchList } from "../features/watchListSlice";
+import { useQueryClient } from "@tanstack/react-query";
 
 
 
 const MovieData = () => {
-    const { movieData } = useMovieData();
+    let { movieData } = useMovieData();
     // ["Crime, "Thriller", "romance"]
     // console.log(movieData.genres.map((genre) => genre.name).join(', '))
+
+    const queryClient = useQueryClient();
+
+    // get the global state of our 'movies' data from our cache
+    const searchData = queryClient.getQueryData(['movies'])
+
+    if (searchData) { movieData = searchData }
 
     const dispatch = useDispatch();
 
@@ -46,7 +54,7 @@ const MovieData = () => {
             release_date: movieData.release_date,
             popularity: movieData.popularity,
     }
-    dispatch(postToWatchList(movie));
+    dispatch(postToWatchList(movie))
 }
 
 
@@ -85,7 +93,7 @@ const MovieData = () => {
                     </ListGroup>
 
                     <Card.Link className="btn btn-danger mt-3"
-                    onClick={() => handleAddWatchList()}>
+                    onClick={() => handleAddWatchList(movieData)}>
                         Add to Watchlist
                     </Card.Link>
                 </Card.Body>

@@ -23,6 +23,13 @@ const Login = () => {
         // prevents refresh
         event.preventDefault(); 
 
+        // .setItem - saves our data to web storage
+        // need to save items as key value pairs
+        // values need to be saved as strings, so if you are saving an object type for example, make sure you 
+        //use JSON.stringify
+        sessionStorage.setItem('user', JSON.stringify({name: username, isLoggedIn: true}))
+
+
         // update user context
         setUser({ name: username, isLoggedIn: true })
 

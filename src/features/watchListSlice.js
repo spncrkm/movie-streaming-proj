@@ -1,17 +1,22 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+export const loadWatchListState = () => {
+    const watchListState = localStorage.getItem('watchListState')
+    return watchListState ? JSON.parse(watchListState) : initialState;
+}
+
 export const postToWatchList = createAsyncThunk( "watchList/postWatchList",
     async (data) => {
         try {
-            const responsePost = await axios.post("https://dummyjson.com/posts/add", data, {
+            const responsePost = await axios.post("http://127.0.0.1:5000/watchlist", data, {
                 headers: {
                     "Content-Type": "application/json",
                 },
             }
         );
 
-        const responseGet = await axios.get("https://dummyjson.com/posts")
+        const responseGet = await axios.get("http://127.0.0.1:5000/watchlist")
 
         //our watch list global state
         return responseGet.data;
@@ -43,6 +48,7 @@ export const watchListSlice = createSlice({
             .addCase(postToWatchList.fulfilled, (state, action) => {
                 state.status = "succeeded";
                 state.watchList = action.payload;
+                state.totalItems = action.payload.length;
             })
             .addCase(postToWatchList.rejected, (state, action) => {
                 state.status = "failed"
@@ -50,3 +56,5 @@ export const watchListSlice = createSlice({
             })
     }
 })
+
+export default watchListSlice.reducer;

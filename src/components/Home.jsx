@@ -3,6 +3,7 @@ import { Container } from "react-bootstrap";
 import UserContext from "../context/UserContext";
 import NavBar from "./NavBar";
 import MovieData from "./MovieData";
+import Search from './Search';
 
 const Home = () => {
   // user = the data we're trying access   calling from UserContext
@@ -20,9 +21,9 @@ const Home = () => {
                 <>
                 <h1>Welcome {user.name}</h1>
                 <p>You are now logged in</p>
-                <h3>Random recommended movie: 
-                </h3>
+                <h3>Random recommended movie:</h3>
                 <MovieData />
+                <Search />
                 </>
             ) : (
                 <>

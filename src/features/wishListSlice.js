@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+export const loadWishListState = () => {
+    const wishListState = localStorage.getItem('wishListState')
+    return wishListState ? JSON.parse(wishListState) : initialState;
+}
+
 const initialState = {
     //for when we need to grab the state.property. state name is what gets set up in our store.
     // property is one of the following
@@ -9,6 +14,7 @@ const initialState = {
     // wishList.totalItems
     totalItems: 0,
 };
+
 
 export const wishListSlice = createSlice({
     name: "wish list",
